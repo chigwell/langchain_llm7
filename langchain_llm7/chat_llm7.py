@@ -46,6 +46,7 @@ class ChatLLM7(BaseChatModel):
         max_retries (int): Maximum number of retries for API calls. Defaults to 3.
         stop (Optional[List[str]]): List of stop sequences to halt generation.
         streaming (bool): Whether to stream responses. Defaults to False.
+        seed (Optional[int]): Random seed for reproducibility.
 
     Example:
         Basic usage with LangChain:
@@ -70,6 +71,7 @@ class ChatLLM7(BaseChatModel):
     max_retries: int = Field(default=3)
     stop: Optional[List[str]] = None
     streaming: bool = Field(default=False)
+    seed: Optional[int] = None
 
     @model_validator(mode="after")
     def validate_environment(self) -> "ChatLLM7":
@@ -125,6 +127,7 @@ class ChatLLM7(BaseChatModel):
             "messages": self._format_messages(messages),
             "temperature": self.temperature,
             "stream": stream,
+            "seed": self.seed,
         }
 
         if self.max_tokens:

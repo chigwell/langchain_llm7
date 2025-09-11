@@ -7,7 +7,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name='langchain-llm7',
-    version='2025.9.111220',
+    version='2025.9.111718',
     author='Eugene Evstafev',
     author_email='chigwel@gmail.com',
     description='A LangChain wrapper for LLM7 API',
