@@ -182,6 +182,14 @@ class ChatLLM7(BaseChatModel):
             raise ValueError(f"API request failed with status {response.status_code}: {response.text}")
 
         response_data = response.json()
+
+        try:
+            if response_data["error"]["message"]:
+                raise ValueError(f"API error: {response_data['error']['message']}")
+        except KeyError:
+            pass
+
+
         content = response_data["choices"][0]["message"]["content"]
 
         output_tokens = tokeniser.estimate_tokens(content)
