@@ -47,6 +47,7 @@ class ChatLLM7(BaseChatModel):
         stop (Optional[List[str]]): List of stop sequences to halt generation.
         streaming (bool): Whether to stream responses. Defaults to False.
         seed (Optional[int]): Random seed for reproducibility.
+        token (Optional[str]): API key for authentication. Defaults to "none".
 
     Example:
         Basic usage with LangChain:
@@ -72,6 +73,7 @@ class ChatLLM7(BaseChatModel):
     stop: Optional[List[str]] = None
     streaming: bool = Field(default=False)
     seed: Optional[int] = None
+    token: Optional[str] = Field(default="none", alias="api_key")
 
     @model_validator(mode="after")
     def validate_environment(self) -> "ChatLLM7":
@@ -174,11 +176,16 @@ class ChatLLM7(BaseChatModel):
                 pass
         input_tokens = tokeniser.estimate_tokens(text)
 
+        headers = {"Content-Type": "application/json"}
+
+        if self.token:
+            headers["Authorization"] = f"Bearer {self.token}"
+
         response = requests.post(
             url,
             json = payload,
             timeout = self.timeout,
-            headers = {"Content-Type": "application/json"}
+            headers = headers
         )
 
         if response.status_code != 200:
@@ -238,11 +245,16 @@ class ChatLLM7(BaseChatModel):
         if stop:
             payload["stop"] = stop
 
+        headers = {"Content-Type": "application/json"}
+
+        if self.token:
+            headers["Authorization"] = f"Bearer {self.token}"
+
         with requests.post(
             url,
             json = payload,
             timeout = self.timeout,
-            headers = {"Content-Type": "application/json"},
+            headers = headers,
             stream = True
         ) as response:
             if response.status_code != 200:
