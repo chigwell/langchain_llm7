@@ -7,9 +7,9 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name='langchain-llm7',
-    version='2025.9.131316',
+    version='2025.10.271728',
     author='Eugene Evstafev',
-    author_email='chigwel@gmail.com',
+    author_email='hi@eugene.plus',
     description='A LangChain wrapper for LLM7 API',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -17,9 +17,9 @@ setup(
     packages=find_packages(),
     install_requires=[
         'tokeniser>=0.0.3',
-        'requests==2.32.3',
-        'pydantic==2.11.3',
-        'langchain-core==0.3.51'
+        'requests==2.32.5',
+        'pydantic==2.11.4',
+        'langchain-core==1.0.1'
     ],
     classifiers=[
         'License :: OSI Approved :: Apache Software License',
